@@ -1,13 +1,14 @@
-import com.google.common.collect.Sets;
-
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class NumericalPossibilities {
 
     private List<Integer> result;
+
+    public static void main(String args[]) {
+        if (args == null || args.length != 1) throw new IllegalArgumentException("Deve possuir apenas um argumento");
+
+        System.out.println(Arrays.toString(new NumericalPossibilities(args[0]).get()));
+    }
 
     public Integer[] get() {
         return result.toArray(new Integer[0]);
@@ -20,10 +21,7 @@ public class NumericalPossibilities {
 
     private List<Integer> asNumber(Set<String> generated) {
         List<Integer> newSet = new ArrayList<>();
-        generated
-                .stream()
-                .filter(s -> !s.startsWith("0"))
-                .forEach(item -> newSet.add(Integer.valueOf(item)));
+        generated.stream().filter(s -> !s.startsWith("0")).forEach(item -> newSet.add(Integer.valueOf(item)));
         return newSet;
     }
 
@@ -39,22 +37,21 @@ public class NumericalPossibilities {
 class TextPossibilities {
 
     public Set<String> generate(String text) {
-        return text.isEmpty()
-                ? Sets.newHashSet(new String())
-                : this.generate(text, new HashSet<>());
+        Set<String> emptySet = new HashSet<>();
+        emptySet.add(new String());
+        return text.isEmpty() ? emptySet : this.generate(text, new HashSet<>());
     }
 
     private Set<String> generate(String text, Set<String> allText) {
         char firstChar = text.charAt(0);
 
-        this.generate(text.substring(1))
-                .forEach(partial -> this.addAll(allText, firstChar, partial));
+        this.generate(text.substring(1)).forEach(partial -> this.addAll(allText, firstChar, partial));
 
         return allText;
     }
 
     private void addAll(Set<String> set, char firstChar, String item) {
-        for (int index = 0; index <= item.length(); index++){
+        for (int index = 0; index <= item.length(); index++) {
             StringBuilder builder = new StringBuilder();
             builder.append(item, 0, index).append(firstChar).append(item.substring(index));
             set.add(builder.toString());
