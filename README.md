@@ -8,7 +8,7 @@ mvn install
 java -jar target/numerical-possibilities-1.0.jar 120
 ```
 
-** 120 = Valor numérico que será a base para o cálculo
+** 120 = Valor numérico que será a base para o cálculo 
 ** Desconsidera combinaçes que iniciam com número 0
 
 ### Tecnologias
